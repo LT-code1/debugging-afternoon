@@ -5,7 +5,7 @@ import ShoppingCart from "./Components/ShoppingCart/ShoppingCart";
 import NavBar from "./Components/NavBar/NavBar";
 
 class App extends Component {
-  constuctor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       products: [],
@@ -21,21 +21,17 @@ class App extends Component {
       .get("https://practiceapi.devmountain.com/products/")
       .then(response => {
         this.setState({
-          products: response
+          products: response.data        ///when getting data with an axios call the obj.data property has to be pushed to get data array
         });
       });
   }
   addToCart(item) {
-    this.setState({
-      cart: item
-    });
+      this.setState({cart: [...this.state.cart,item]})           ///have to additem to cart here
   }
   removeFromCart(index) {
-    let cartCopy = this.state.products.slice();
+    let cartCopy = this.state.cart.slice();
     cartCopy.splice(index, 1);
-    this.setState({
-      cart: cartCopy
-    });
+   this.setState( {cart: cartCopy} );
   }
   navigate(location) {
     if (location === "cart") {
